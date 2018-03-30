@@ -1,0 +1,10 @@
+---
+  - hosts: ubuntu
+    roles:
+      - bash
+      - prerequisite-packages
+      - vscode
+      - qemu
+      - pkgsrc
+      - pkgsrc-admin
+      - nitpicks

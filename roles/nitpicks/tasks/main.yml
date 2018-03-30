@@ -1,0 +1,13 @@
+---
+- name: disable unattended-upgrades
+  command: systemctl disable unattended-upgrades
+  become: yes
+
+- name: stop unattended-upgrades
+  command: systemctl stop unattended-upgrades
+  become: yes
+
+- name: enable loginctl linger
+  shell: loginctl enable-linger "$(whoami)"
+  args:
+    executable: /bin/bash

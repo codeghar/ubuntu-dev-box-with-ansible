@@ -1,0 +1,19 @@
+---
+- name: install qemu
+  apt:
+    name: qemu
+    state: latest
+  become: yes
+
+- name: add libvirt-qemu group
+  group:
+    state: present
+    name: libvirt-qemu
+  become: yes
+
+- name: add user "{{ ansible_user_id }}" to libvirt-qemu group
+  user:
+    append: yes
+    name: "{{ ansible_user_id }}"
+    groups: libvirt-qemu
+  become: yes

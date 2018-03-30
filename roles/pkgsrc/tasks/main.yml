@@ -1,0 +1,228 @@
+---
+# - name: update repositories cache
+#   apt:
+#     update_cache: yes
+#   become: yes
+
+- name: install build tools
+  apt:
+    name: build-essential
+    state: present
+  become: yes
+
+- name: install git
+  apt:
+    name: git
+    state: present
+  become: yes
+
+- name: clone pkgsrc repo
+  git:
+    clone: yes
+    update: no
+    version: trunk
+    repo: https://github.com/NetBSD/pkgsrc.git
+    dest: ~/pkgsrc
+
+- name: set path environment variable
+  lineinfile:
+    backup: yes
+    path: ~/.profile
+    state: present
+    line: PATH="${HOME}/pkg/sbin:${HOME}/pkg/bin:${PATH}"
+
+- name: export path environment variable
+  lineinfile:
+    backup: yes
+    path: ~/.profile
+    state: present
+    line: export PATH
+    insertbefore: ^PATH=
+
+- name: set manpath environment variable
+  lineinfile:
+    backup: yes
+    path: ~/.profile
+    state: present
+    line: MANPATH="${HOME}/pkg/man:${MANPATH}"
+
+- name: export manpath environment variable
+  lineinfile:
+    backup: yes
+    path: ~/.profile
+    state: present
+    line: export MANPATH
+    insertbefore: ^MANPATH=
+
+- name: set lc_ctype environment variable
+  lineinfile:
+    backup: yes
+    path: ~/.profile
+    state: present
+    line: LC_CTYPE=en_US.UTF-8
+
+- name: export lc_ctype environment variable
+  lineinfile:
+    backup: yes
+    path: ~/.profile
+    state: present
+    line: export LC_CTYPE
+    insertbefore: ^LC_CTYPE=
+
+- name: set lc_messages environment variable
+  lineinfile:
+    backup: yes
+    path: ~/.profile
+    state: present
+    line: LC_MESSAGES=en_US.UTF-8
+
+- name: export lc_ctype environment variable
+  lineinfile:
+    backup: yes
+    path: ~/.profile
+    state: present
+    line: export LC_MESSAGES
+    insertbefore: ^LC_MESSAGES=
+
+- name: set lc_collate environment variable
+  lineinfile:
+    backup: yes
+    path: ~/.profile
+    state: present
+    line: LC_COLLATE=C
+
+- name: export lc_collate environment variable
+  lineinfile:
+    backup: yes
+    path: ~/.profile
+    state: present
+    line: export LC_COLLATE
+    insertbefore: ^LC_COLLATE=
+
+- name: set lc_time environment variable
+  lineinfile:
+    backup: yes
+    path: ~/.profile
+    state: present
+    line: LC_TIME=C
+
+- name: export lc_time environment variable
+  lineinfile:
+    backup: yes
+    path: ~/.profile
+    state: present
+    line: export LC_TIME
+    insertbefore: ^LC_TIME=
+
+- name: set lc_numeric environment variable
+  lineinfile:
+    backup: yes
+    path: ~/.profile
+    state: present
+    line: LC_NUMERIC=C
+
+- name: export lc_numeric environment variable
+  lineinfile:
+    backup: yes
+    path: ~/.profile
+    state: present
+    line: export LC_NUMERIC
+    insertbefore: ^LC_NUMERIC=
+
+- name: set lc_monetary environment variable
+  lineinfile:
+    backup: yes
+    path: ~/.profile
+    state: present
+    line: LC_MONETARY=C
+
+- name: export lc_monetary environment variable
+  lineinfile:
+    backup: yes
+    path: ~/.profile
+    state: present
+    line: export LC_MONETARY
+    insertbefore: ^LC_MONETARY=
+
+- name: set lc_all environment variable
+  lineinfile:
+    backup: yes
+    path: ~/.profile
+    state: present
+    line: LC_ALL=
+
+- name: export lc_monetary environment variable
+  lineinfile:
+    backup: yes
+    path: ~/.profile
+    state: present
+    line: export LC_ALL
+    insertbefore: ^LC_ALL=
+
+# https://wiki.netbsd.org/pkgsrc/how_to_use_pkgsrc_on_linux/#index1h2
+- name: bootstrap pkgsrc in home directory
+  shell: env SH=/bin/bash ./bootstrap --unprivileged
+  args:
+    chdir: ~/pkgsrc/bootstrap
+    creates: ~/pkg
+    executable: /bin/bash
+
+- name: create work directory
+  file:
+    path: ~/pkg/usr/work
+    state: directory
+
+- name: set wrkobjdir in pkg mk.conf
+  lineinfile:
+    backup: yes
+    path: ~/pkg/etc/mk.conf
+    state: present
+    regexp: '^WRKOBJDIR='
+    line: WRKOBJDIR=${HOME}/pkg/usr/work
+    insertbefore: ^.endif
+
+- name: create distfiles directory
+  file:
+    path: ~/pkg/usr/work
+    state: directory
+
+- name: set distdir in pkg mk.conf
+  lineinfile:
+    backup: yes
+    path: ~/pkg/etc/mk.conf
+    state: present
+    regexp: '^DISTDIR='
+    line: DISTDIR=${HOME}/pkg/usr/distfiles
+    insertbefore: ^.endif
+
+- name: set python_version_default in pkg mk.conf
+  lineinfile:
+    backup: yes
+    path: ~/pkg/etc/mk.conf
+    state: present
+    regexp: '^PYTHON_VERSION_DEFAULT='
+    line: PYTHON_VERSION_DEFAULT=36
+    insertbefore: ^.endif
+
+- name: set pkgsrcdir in pkg mk.conf
+  lineinfile:
+    backup: yes
+    path: ~/pkg/etc/mk.conf
+    state: present
+    regexp: '^PKGSRCDIR='
+    line: PKGSRCDIR=${HOME}/pkgsrc
+    insertbefore: ^.endif
+
+- name: install pkg_rolling-replace
+  shell: source ~/.profile && bmake install
+  args:
+    chdir: ~/pkgsrc/pkgtools/pkg_rolling-replace
+    creates: ~/pkg/sbin/pkg_rolling-replace
+    executable: /bin/bash
+
+- name: install pkg_alternatives
+  shell: source ~/.profile && bmake install
+  args:
+    chdir: ~/pkgsrc/pkgtools/pkg_alternatives
+    # creates: ~/pkg/sbin/pkg_rolling-replace
+    executable: /bin/bash

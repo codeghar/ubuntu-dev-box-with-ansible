@@ -1,0 +1,23 @@
+---
+- name: fetch latest known vulnerabilities
+  shell: source ~/.profile && pkg_admin -K ~/pkg/pkgdb fetch-pkg-vulnerabilities
+  args:
+    executable: /bin/bash
+
+- name: audit for vulnerabilities
+  shell: source ~/.profile && pkg_admin -v audit
+  args:
+    executable: /bin/bash
+
+- name: update pkgsrc git repo
+  git:
+    clone: no
+    update: yes
+    version: trunk
+    repo: https://github.com/NetBSD/pkgsrc.git
+    dest: ~/pkgsrc
+
+- name: upgrade all packages
+  shell: source ~/.profile && pkg_rolling-replace -u -v
+  args:
+    executable: /bin/bash

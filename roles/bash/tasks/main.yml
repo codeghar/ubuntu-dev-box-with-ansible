@@ -1,0 +1,53 @@
+---
+- name: copy bashrc
+  copy:
+    src: bashrc
+    dest: ~/.bashrc
+    backup: yes
+
+- name: copy profile
+  copy:
+    src: profile
+    dest: ~/.profile
+    backup: yes
+
+# - name: create shells directory
+#   file:
+#     path: ~/.shells
+#     state: directory
+
+# - name: copy env
+#   copy:
+#     src: env
+#     dest: ~/.shells/env
+#     backup: yes
+
+# - name: copy interactive
+#   copy:
+#     src: interactive
+#     dest: ~/.shells/interactive
+#     backup: yes
+
+# - name: copy login
+#   copy:
+#     src: login
+#     dest: ~/.shells/login
+#     backup: yes
+
+# - name: copy logout
+#   copy:
+#     src: logout
+#     dest: ~/.shells/logout
+#     backup: yes
+
+# - name: copy bash_logout
+#   copy:
+#     src: bash_logout
+#     dest: ~/.bash_logout
+#     backup: yes
+
+# - name: copy bash_profile
+#   copy:
+#     src: bash_profile
+#     dest: ~/.bash_profile
+#     backup: yes
