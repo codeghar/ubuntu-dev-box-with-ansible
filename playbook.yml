@@ -1,13 +1,13 @@
 ---
   - hosts: ubuntu
     roles:
-      # - bash
-      # - prerequisite-packages
-      # - vscode
+      - bash
+      - prerequisite-packages
+      - vscode
       - pycharm
-      # - qemu
-      # - pkgsrc
-      # - pkgsrc-admin
-      # - nitpicks
+      - qemu
+      - pkgsrc
+      - pkgsrc-admin
+      - nitpicks
       - docker
       - google-chrome
