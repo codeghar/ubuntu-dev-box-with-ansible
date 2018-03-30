@@ -13,6 +13,7 @@ Configure environment variable with the login user name.
         $ DEFAULT_REMOTE_USER=you_user_name
 
 Install Ansible with pipenv.
+
         $ pipenv install
 
 Notice in *hosts* file in this repo that the Python interpreter is Python 3.
