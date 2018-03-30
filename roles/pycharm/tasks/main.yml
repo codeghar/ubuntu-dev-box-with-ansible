@@ -1,0 +1,4 @@
+---
+- name: install pycharm-professional snap
+  command: snap install pycharm-professional --classic
+  become: yes
