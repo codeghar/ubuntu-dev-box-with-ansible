@@ -1,4 +1,18 @@
 ---
+- name: create directory for docker config override
+  file:
+    path: /etc/systemd/system/docker.service.d
+    state: directory
+    mode: 0755
+
+- name: create file for docker config override
+  template:
+    src: startup_options.conf.j2
+    dest: /etc/systemd/system/docker.service.d/startup_options.conf
+    owner: root
+    group: root
+    mode: 0644
+
 - name: add docker's apt signing key
   apt_key:
     url: https://download.docker.com/linux/ubuntu/gpg

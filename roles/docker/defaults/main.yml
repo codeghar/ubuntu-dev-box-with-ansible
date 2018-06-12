@@ -1,2 +1,2 @@
 ---
-# defaults file for docker
+new_docker_path = /var/lib/docker
