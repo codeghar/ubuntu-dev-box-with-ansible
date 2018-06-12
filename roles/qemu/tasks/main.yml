@@ -5,6 +5,12 @@
     state: latest
   become: yes
 
+- name: install qemu-kvm
+  apt:
+    name: qemu-kvm
+    state: latest
+  become: yes
+
 - name: add libvirt-qemu group
   group:
     state: present
@@ -16,4 +22,18 @@
     append: yes
     name: "{{ ansible_user_id }}"
     groups: libvirt-qemu
+  become: yes
+
+- name: add user "{{ ansible_user_id }}" to plugdev group
+  user:
+    append: yes
+    name: "{{ ansible_user_id }}"
+    groups: plugdev
+  become: yes
+
+- name: add user "{{ ansible_user_id }}" to kvm group
+  user:
+    append: yes
+    name: "{{ ansible_user_id }}"
+    groups: kvm
   become: yes
