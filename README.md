@@ -7,7 +7,7 @@ Modify *ansible.cfg* and *hosts* files before proceeding.
 
 Assumes ssh with public key login has been configured with the Ubuntu box.
 
-Configure environment variable with the login user name ((source](https://docs.ansible.com/ansible/2.7/reference_appendices/config.html#envvar-ANSIBLE_REMOTE_USER)).
+Configure environment variable with the login user name ([source](https://docs.ansible.com/ansible/2.7/reference_appendices/config.html#envvar-ANSIBLE_REMOTE_USER)).
 
         $ export ANSIBLE_REMOTE_USER
         $ ANSIBLE_REMOTE_USER=your_user_name
