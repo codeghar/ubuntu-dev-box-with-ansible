@@ -1,0 +1,4 @@
+---
+  - hosts: unifi-controller
+    roles:
+      - unifi

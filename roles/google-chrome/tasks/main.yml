@@ -11,11 +11,13 @@
     state: present
     filename: google-chrome
   become: yes
+  register: chrome-repo
 
 - name: update repositories cache
   apt:
     update_cache: yes
   become: yes
+  when: chrome-repo.changed
 
 - name: install google-chrome-stable
   apt:

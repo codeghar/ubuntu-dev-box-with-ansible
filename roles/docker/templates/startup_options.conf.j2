@@ -3,4 +3,4 @@
 # /etc/systemd/system/docker.service.d/override.conf
 [Service]
 ExecStart=
-ExecStart=/usr/bin/dockerd -H fd:// -H tcp://0.0.0.0:2375 --data-root {{ new_docker_path }}
+ExecStart=/usr/bin/dockerd -H fd:// -H tcp://0.0.0.0:2375 --data-root {{ docker_data_root }}

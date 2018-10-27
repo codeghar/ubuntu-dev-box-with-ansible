@@ -1,2 +1,3 @@
 ---
-# vars file for docker
+# https://docs.docker.com/engine/reference/commandline/dockerd/#run-multiple-daemons
+docker_data_root: "/var/lib/docker"

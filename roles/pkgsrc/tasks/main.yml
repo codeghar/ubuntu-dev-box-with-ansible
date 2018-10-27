@@ -201,7 +201,7 @@
     path: ~/pkg/etc/mk.conf
     state: present
     regexp: '^PYTHON_VERSION_DEFAULT='
-    line: PYTHON_VERSION_DEFAULT=36
+    line: PYTHON_VERSION_DEFAULT=37
     insertbefore: ^.endif
 
 - name: set pkgsrcdir in pkg mk.conf
