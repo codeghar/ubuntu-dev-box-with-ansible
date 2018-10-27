@@ -12,6 +12,8 @@ Configure environment variable with the login user name ((source](https://docs.a
         $ export ANSIBLE_REMOTE_USER
         $ ANSIBLE_REMOTE_USER=your_user_name
 
+If you have installed direnv, you can put the above in .envrc.
+
 Install Ansible with pipenv.
 
         $ make init

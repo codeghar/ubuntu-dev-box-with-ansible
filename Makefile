@@ -6,7 +6,7 @@ init:
 
 .PHONY: desktop
 desktop:
-	pipenv run ansible-playbook --extra-vars docker_data_root=$(DOCKER_DATA_ROOT) playbook.yml
+	pipenv run ansible-playbook --extra-vars docker_data_root=$(DOCKER_DATA_ROOT) playbook-desktop.yml
 
 .PHONY: unifi
 unifi:
@@ -27,3 +27,16 @@ bash-refresh: | /tmp/new-mac
 
 /tmp/new-mac:
 	(cd /tmp/new-mac && git pull) || git clone https://github.com/aikchar/new-mac.git /tmp/new-mac
+
+# -----
+# DEV ONLY
+
+.PHONY: git-ignore-changes
+git-ignore-changes:
+	git update-index --assume-unchanged ./ansible.cfg
+	git update-index --assume-unchanged ./hosts
+
+.PHONY: git-stop-ignore-changes
+git-stop-ignore-changes:
+	git update-index --no-assume-unchanged ./ansible.cfg
+	git update-index --no-assume-unchanged ./hosts
